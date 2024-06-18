@@ -51,6 +51,17 @@
         <title>PHP - Hotel</title>
     </head>
     <body>
+
+        <form method="GET" action="">
+            <div class="form-check mb-4">
+                <input class="form-check-input" type="checkbox" value="1" id="parkingFilter" name="parkingFilter" 
+                <?php if (isset($_GET['parkingFilter'])) echo 'checked'; ?>>
+                <label class="form-check-label" for="parkingFilter">
+                    Filtra per Hotel che dispongono di un parcheggio
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Filtra</button>
+        </form>
         
         <?php
             // foreach ($hotels as $hotel) {
@@ -75,11 +86,13 @@
                 </thead>
                 <tbody>
                     <tr <?php foreach ($hotels as $hotel) : ?>>
+                        <?php if (!isset($_GET['parkingFilter']) || (isset($_GET['parkingFilter']) && $hotel['parking'])) { ?>
                     <th scope="row"><?php echo $hotel['name'] ?></th>
                     <td><?php echo $hotel['description'] ?></td>
                     <td><?php echo ($hotel['parking'] ? 'Sì' : 'No') ?></td>
                     <td><?php echo $hotel['vote'] ?></td>
                     <td><?php echo $hotel['distance_to_center'] ?></td>
+                        <?php } ?>
                     </tr <?php endforeach; ?>>
                 </tbody>
             </table>
